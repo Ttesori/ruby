@@ -7,9 +7,8 @@ dictionary = ["below","down","go","going","horn","how","howdy","it","i","low","o
 
 
 def substrings(text,dictionary)
-	text.downcase!
 	#create array of words and hash of frequencies
-	words_list = text.split(/[!$. ,|?*+()]/)
+	words_list = text.downcase.split(/[!$. ,|?*+()]/)
 	frequencies = Hash.new()
 
 	# add each word of dictionary into a new hash
