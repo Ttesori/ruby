@@ -1,24 +1,70 @@
-# Sort an array manually
+require 'rubygems'
+require 'sqlite3'
 
-# Declare array of words
-array_to_sort = ["Toni","Michael","Olivia"]
+$db = SQLite3::Database.new("dbfile")
+$db.results_as_hash = true
 
-# Copy into array of unsorted words, create empty array of sorted words
-unsorted_words = array_to_sort
-sorted_words = []
-
-# Compare first two words in array, add smaller to sorted and remove from unsorted
-array_to_sort.length.times do |x|
-	if (unsorted_words[0] < unsorted_words[1]) 
-		sorted_words.push(unsorted_words[0])
-		unsorted_words.pop(unsorted_words[0])
-	else sorted_words.push(unsorted_words[1])
-		unsorted_words.pop(unsorted_words[1])
-	end
+def disconnect_and_quit
+  $db.close
+  puts "Bye!"
+  exit
 end
 
-sorted_words.each do |x|
-	puts x + ", "
+def create_table
+  puts "Creating people table"
+  $db.execute %q{
+    CREATE TABLE people (
+      id integer primary key,
+      name varchar(50),
+      job varchar (50),
+      gender varchar(6),
+      age integer)
+  }
 end
-# Compare last word in sorted array to next word in unsorted array, add smaller to sorted and remove from unsorted
-# Repeat until unsorted array is empty
+
+def add_person
+  puts "Enter name:"
+  name = gets.chomp
+  puts "Enter job:"
+  job = gets.chomp
+  puts "Enter gender:"
+  gender = gets.chomp
+  puts "Enter age:"
+  age = gets.chomp
+  $db.execute("INSERT INTO people (name,job,gender,age) VALUES (?,?,?,?)", name,job,gender,age)
+end
+
+def find_person
+  puts "Enter name or ID of person to find:"
+  id = gets.chomp
+
+  person = $db.execute("SELECT * FROM people WHERE name = ? OR id = ?",id,id.to_i).first
+
+  unless person
+    puts "No result found"
+    return
+  end
+  puts %Q{Name #{person['name']}
+Job: #{person['job']}
+Gender: #{person['gender']}
+Age: #{person['age']}}
+end
+
+loop do
+  puts %q{Please select an option:
+    1.Create people table
+    2. Add a person
+    3. Lok for a person
+    4. Quit}
+
+  case gets.chomp
+  when '1'
+    create_table
+  when '2'
+    add_person
+  when '3'
+    find_person
+  when '4'
+    disconnect_and_quit
+  end
+end

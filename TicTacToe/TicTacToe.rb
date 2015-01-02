@@ -1,3 +1,5 @@
+# My first OOP game, the classic Tic-Tac-Toe. 
+
 class Game
   attr_accessor :player_x,:player_o,:board
   @@seperator = "==================="
@@ -89,19 +91,20 @@ class Board
 
   def setup_board #Create the game board
     @board = []
-    9.times do
+    10.times do
       @board << "="
     end
   end
 
   def print_board #Display the current board
     @board.each_with_index do |space,index|
+      next if index == 0
       if space == "=" 
         print "[ #{index} ]"
       else 
         print "[ #{space} ]"
       end
-      puts if index == 2 || index == 5 || index == 8 #New line every 3 spaces
+      puts if index%3 == 0 #New line every 3 spaces
     end
   end
 
@@ -114,37 +117,18 @@ class Board
   end
 
   def check_victory #Alllll of the ways victory can happen...
+    winning_ways = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
     x_wins = "xwin"
     o_wins = "owin"
     n_win = "nowin"
-    if [@board[0],@board[1],@board[2]].all? {|space| space == "X"}
-      return x_wins
-    elsif [@board[3],@board[4],@board[5]].all? {|space| space == "X"}
-      return x_wins
-    elsif [@board[6],@board[7],@board[8]].all? {|space| space == "X"}
-      return x_wins
-    elsif [@board[0],@board[3],@board[6]].all? {|space| space == "X"}
-      return x_wins
-    elsif [@board[1],@board[4],@board[7]].all? {|space| space == "X"}
-      return x_wins
-    elsif [@board[2],@board[5],@board[8]].all? {|space| space == "X"}
-      return x_wins
-    elsif [@board[0],@board[4],@board[8]].all? {|space| space == "X"}
-      return x_wins
-
-    elsif [@board[3],@board[4],@board[5]].all? {|space| space == "O"}
-      return o_wins
-    elsif [@board[6],@board[7],@board[8]].all? {|space| space == "O"}
-      return o_wins
-    elsif [@board[0],@board[3],@board[6]].all? {|space| space == "O"}
-      return o_wins
-    elsif [@board[1],@board[4],@board[7]].all? {|space| space == "O"}
-      return o_wins
-    elsif [@board[2],@board[5],@board[8]].all? {|space| space == "O"}
-      return o_wins
-    elsif [@board[0],@board[4],@board[8]].all? {|space| space == "O"}
-      return o_wins
-    elsif @board.all? { |space| space != "="}
+    winning_ways.each do |way| #Check each winning way against the board
+      if [@board[way[0]],@board[way[1]],@board[way[2]]].all? {|space| space == "X"}
+        return x_wins
+      elsif [@board[way[0]],@board[way[1]],@board[way[2]]].all? {|space| space == "O"}
+        return o_wins
+      end
+    end
+    if @board.all? { |space| space != "="} #Check to see if a victory is impossible
       return n_win
     else 
       return false
