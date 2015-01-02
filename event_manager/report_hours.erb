@@ -1,0 +1,22 @@
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Hourly Report</title>
+</head>
+<body>
+<h1>Hourly Report</h1>
+<table>
+<thead>
+  <tr>
+    <th>Hour of Day</th>
+    <th>Count</th>
+  </tr>
+</thead>
+<tbody>
+<%hours.sort.each do |hour,count|%>
+  <tr><td><%="#{hour}"%></td><td><%="#{count}"%></td></tr>
+<%end%>
+</tbody>
+</table>
+</body>
+</html>
