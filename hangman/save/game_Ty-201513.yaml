@@ -1,0 +1,27 @@
+---
+- !ruby/object:Game
+  player_name: Ty
+  this_word: &1 !ruby/object:Word
+    correct_word: cassius
+    correct_letters:
+    - c
+    - a
+    - s
+    - s
+    - i
+    - u
+    - s
+    incorrect_guesses:
+    - e
+    - o
+    - r
+    - t
+    - l
+    - n
+    correct_guesses:
+    - a
+    - i
+    - s
+  turns_left: 4
+  save_file_name: save/game_Ty-201513.yaml
+- *1

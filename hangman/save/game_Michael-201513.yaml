@@ -1,0 +1,32 @@
+---
+- !ruby/object:Game
+  player_name: Michael
+  this_word: &1 !ruby/object:Word
+    correct_word: covenantor
+    correct_letters:
+    - c
+    - o
+    - v
+    - e
+    - n
+    - a
+    - n
+    - t
+    - o
+    - r
+    incorrect_guesses:
+    - i
+    - u
+    - s
+    - l
+    correct_guesses:
+    - a
+    - e
+    - o
+    - r
+    - t
+    - n
+    - e
+  turns_left: 6
+  save_file_name: save/game_Michael-201513.yaml
+- *1
